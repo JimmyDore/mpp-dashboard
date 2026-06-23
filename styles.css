@@ -227,6 +227,12 @@ section { margin: 64px auto; }
 .lg.off { opacity: .38; }
 .lg .d { width: 9px; height: 9px; border-radius: 50%; }
 .lg.me { border-color: rgba(233,185,73,.5); color: var(--gold-lite); }
+.lg-all {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em;
+  color: var(--gold-lite); background: rgba(233,185,73,.08);
+  border-color: rgba(233,185,73,.35); margin-right: 3px;
+}
+.lg-all:hover { background: rgba(233,185,73,.15); border-color: rgba(233,185,73,.55); color: var(--gold-lite); }
 
 /* segmented control */
 .seg { display:inline-flex; background: var(--bg-2); border: 1px solid var(--line-soft); border-radius: 9px; padding: 3px; gap: 2px; }

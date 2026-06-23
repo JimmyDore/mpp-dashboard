@@ -301,10 +301,17 @@ function buildBump() {
 }
 const ordTxt = n => n + (n === 1 ? "ᵉʳ" : "ᵉ");
 
+const allShown = () => hidden.size === 0;
+function allBtnLabel() { return allShown() ? "✕ Tout masquer" : "✓ Tout afficher"; }
 function renderLegend(id) {
-  document.getElementById(id).innerHTML = TABLE.map(u =>
+  const ctrl = `<button class="lg lg-all" data-all="1">${allBtnLabel()}</button>`;
+  document.getElementById(id).innerHTML = ctrl + TABLE.map(u =>
     `<span class="lg ${u.username === ME ? "me" : ""} ${hidden.has(u.username) ? "off" : ""}" data-p="${esc(u.username)}">
       <span class="d" style="background:${COLOR[u.username]}"></span>${esc(u.username)}</span>`).join("");
+}
+/* synchronise le libellé des boutons "tout afficher/masquer" des deux légendes */
+function refreshAllBtns() {
+  document.querySelectorAll(".lg-all").forEach(b => { b.textContent = allBtnLabel(); });
 }
 /* toggle partagé entre les deux charts d'évolution */
 function togglePlayer(p) {
@@ -315,9 +322,20 @@ function togglePlayer(p) {
     const ds = ch?.data.datasets.find(d => d.label === p);
     if (ds) { ds.hidden = hidden.has(p); ch.update(); }
   });
+  refreshAllBtns();
+}
+/* tout afficher si au moins un est masqué, sinon tout masquer */
+function toggleAllPlayers() {
+  if (allShown()) TABLE.forEach(u => hidden.add(u.username));
+  else hidden.clear();
+  [["bumpLegend", bumpChart], ["pointsLegend", pointsChart]].forEach(([lid, ch]) => {
+    if (document.getElementById(lid)) renderLegend(lid);
+    if (ch) { ch.data.datasets.forEach(ds => { ds.hidden = hidden.has(ds.label); }); ch.update(); }
+  });
 }
 function wireLegend(id) {
   document.getElementById(id).addEventListener("click", e => {
+    if (e.target.closest(".lg-all")) { toggleAllPlayers(); return; }
     const el = e.target.closest(".lg"); if (!el) return;
     togglePlayer(el.dataset.p);
   });
