@@ -55,6 +55,7 @@ section "Données" du README.
   (Chrome 136+ interdit le remote-debug sur le profil par défaut → user-data-dir séparé obligatoire),
   l'utilisateur se connecte à la main, puis on s'y branche en CDP pour lire le token.
 - Procédure de renouvellement du token (console DevTools) : voir README → "Rafraîchir les données".
+- **Pour tout re-scraper de zéro** (méthode complète, pas-à-pas, reproductible) : voir [`SCRAPING.md`](SCRAPING.md).
 
 ## Ce qui N'A PAS été fait / limites connues
 

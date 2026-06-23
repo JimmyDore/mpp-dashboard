@@ -61,6 +61,9 @@ récupérer un frais quand il a expiré :
 
 > ⚠️ `.token.txt` est un secret : il est dans `.gitignore`, ne le committe jamais.
 
+> 📘 Pour comprendre/refaire **tout le scraping de zéro** (auth, découverte de
+> l'API, endpoints, résolution des nations) : voir [`SCRAPING.md`](SCRAPING.md).
+
 ## Paramètres
 
 Dans `scraper.py` :
