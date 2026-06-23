@@ -1,0 +1,54 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-mppstats
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy on server
+        run: |
+          ssh -i ~/.ssh/id_ed25519 root@77.42.23.215 'bash -s' <<'EOF'
+          set -euo pipefail
+          REPO=https://github.com/JimmyDore/mpp-dashboard.git
+          DIR=/root/mppstats
+          if [ -d "$DIR/.git" ]; then
+            cd "$DIR"
+            git fetch --prune origin
+            git checkout -B main origin/main
+          else
+            git clone "$REPO" "$DIR"
+            cd "$DIR"
+          fi
+          docker compose up -d --build
+          docker image prune -f
+          EOF
+
+      - name: Health check
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -fsS -o /dev/null -w '%{http_code}' https://mppstats.jimmydore.fr/ || true)
+            if [ "$code" = "200" ]; then
+              echo "Health check passed on attempt $i"
+              exit 0
+            fi
+            echo "Attempt $i: got '$code', retrying in 5s..."
+            sleep 5
+          done
+          echo "Health check failed after 30 attempts"
+          exit 1

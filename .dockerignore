@@ -1,0 +1,15 @@
+# Contexte de build minimal — uniquement les assets statiques sont copiés (cf. Dockerfile).
+.git
+.github
+.claude
+.token.txt
+token.txt
+scraper.py
+build_data.py
+refresh.sh
+data/
+*.md
+docker-compose.yml
+Dockerfile
+.dockerignore
+.gitignore
