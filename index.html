@@ -30,6 +30,10 @@
   <div class="hero-eyebrow" id="eyebrow">Mon Petit Prono · Coupe du Monde 2026</div>
   <h1>FAMILLE<br><span class="out">LÈGE</span></h1>
   <p class="hero-sub" id="heroSub"></p>
+  <div class="mepick unset" id="mePick">
+    <span class="mepick-lbl">👤 C'est toi&nbsp;?</span>
+    <select id="meSelect" aria-label="Choisis ton joueur"></select>
+  </div>
   <div class="hero-stats" id="heroStats"></div>
 </header>
 
@@ -44,7 +48,7 @@
   </div>
   <div class="podium" id="podium"></div>
   <div class="panel">
-    <table class="standings" id="standingsTable"></table>
+    <div class="table-wrap"><table class="standings" id="standingsTable"></table></div>
   </div>
 </section>
 
@@ -54,7 +58,7 @@
     <div class="idx">02</div>
     <div>
       <h2>Course au sommet</h2>
-      <p>Évolution de la position de chacun, journée après journée. Rang 1 tout en haut.</p>
+      <p>Évolution de la position de chacun, match après match. Rang 1 tout en haut.</p>
     </div>
   </div>
   <div class="panel">
@@ -69,9 +73,9 @@
     <div class="idx">03</div>
     <div>
       <h2>Points cumulés</h2>
-      <p>La trajectoire de chaque joueur. Survole pour comparer.</p>
+      <p>La trajectoire de chaque joueur, match après match. Survole pour comparer.</p>
     </div>
-    <div style="margin-left:auto" class="seg" id="ptsSeg">
+    <div class="seg" id="ptsSeg">
       <button data-mode="cumul" class="on">Cumulé</button>
       <button data-mode="gw">Par journée</button>
     </div>

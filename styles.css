@@ -114,7 +114,25 @@ section { margin: 64px auto; }
 }
 .hero-sub b { color: var(--ink); font-weight: 700; }
 
-.hero-stats { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+/* viewer picker — "c'est toi ?" */
+.mepick {
+  display: inline-flex; align-items: center; gap: 12px; margin-top: 22px;
+  padding: 6px 7px 6px 16px; border-radius: 999px;
+  border: 1px solid var(--line); background: rgba(255,255,255,.02);
+}
+.mepick-lbl { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-dim); white-space: nowrap; }
+.mepick select {
+  font-family: var(--font-body); font-weight: 700; font-size: 14px; color: var(--ink);
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: 999px;
+  padding: 9px 14px; cursor: pointer; max-width: 60vw;
+}
+.mepick.unset { border-color: rgba(233,185,73,.45); animation: mepulse 2.6s ease-in-out infinite; }
+.mepick.unset .mepick-lbl { color: var(--gold); }
+@keyframes mepulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(233,185,73,.30); } 50%{ box-shadow: 0 0 0 7px rgba(233,185,73,0); } }
+@media (prefers-reduced-motion: reduce){ .mepick.unset{ animation: none; } .reveal{ transition: none; } html{ scroll-behavior: auto; } }
+
+.hero-stats { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
 .hstat {
   border: 1px solid var(--line); background: rgba(255,255,255,.015);
   border-radius: var(--r-sm); padding: 14px 18px; min-width: 120px;
@@ -124,7 +142,8 @@ section { margin: 64px auto; }
   text-transform: uppercase; color: var(--ink-faint); margin-top: 7px; }
 
 /* ---------- section heads ---------- */
-.shead { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 26px; }
+.shead { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; margin-bottom: 26px; }
+.shead .seg { margin-left: auto; }
 .shead .idx {
   font-family: var(--font-mono); color: var(--gold); font-size: 12px; letter-spacing: .12em;
   border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; margin-bottom: 6px;
@@ -144,7 +163,8 @@ section { margin: 64px auto; }
 .grid { display: grid; gap: 18px; }
 .g-2 { grid-template-columns: 1fr 1fr; }
 .g-3 { grid-template-columns: repeat(3, 1fr); }
-@media (max-width: 880px){ .g-2,.g-3{ grid-template-columns: 1fr; } }
+@media (max-width: 880px){ .g-2 { grid-template-columns: 1fr; } .g-3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px){ .g-3 { grid-template-columns: 1fr; } }
 
 /* ---------- podium ---------- */
 .podium { display: grid; grid-template-columns: 1fr 1.18fr 1fr; align-items: end; gap: 16px; margin-bottom: 26px; }
@@ -181,10 +201,14 @@ section { margin: 64px auto; }
 .pname .nm { font-weight: 700; letter-spacing: .005em; }
 .pname .nm.me::after { content:"TOI"; font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
   background: var(--gold); color:#11130f; padding: 2px 5px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
-.ptsbar { position: relative; height: 22px; min-width: 110px; }
-.ptsbar i { position:absolute; left:0; top:50%; transform: translateY(-50%); height: 7px; border-radius: 4px;
+.ptsbar { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+.ptsbar .track { flex: 1; max-width: 150px; height: 6px; border-radius: 4px;
+  background: rgba(255,255,255,.06); position: relative; overflow: hidden; }
+.ptsbar .track i { position: absolute; left: 0; top: 0; height: 100%; border-radius: 4px;
   background: linear-gradient(90deg, var(--gold-deep), var(--gold)); }
-.ptsbar span { position: relative; font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+.ptsbar b { font-family: var(--font-mono); font-size: 13.5px; font-weight: 600; min-width: 46px; text-align: right; }
+.standings tr.me .ptsbar b { color: var(--gold-lite); }
+.table-wrap { width: 100%; }
 .mono { font-family: var(--font-mono); font-size: 13.5px; }
 .mv { font-family: var(--font-mono); font-size: 12px; font-weight: 600; }
 .mv.up { color: var(--up); } .mv.down { color: var(--down); } .mv.flat { color: var(--ink-faint); }
@@ -242,6 +266,9 @@ section { margin: 64px auto; }
 .h2h-row .a, .h2h-row .b { font-family: var(--font-display); font-size: 26px; }
 .h2h-row .a { text-align: right; } .h2h-row .b { text-align: left; }
 .h2h-row .a.win, .h2h-row .b.win { color: var(--gold); }
+.h2h-row .a.hd, .h2h-row .b.hd { font-size: clamp(18px, 4.5vw, 24px); letter-spacing: .01em; word-break: break-word; }
+.h2h-row .note { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); line-height: 1.5; }
+.h2h-row .note b { color: var(--ink-dim); }
 
 /* ---------- footer ---------- */
 footer { border-top: 1px solid var(--line); margin-top: 80px; padding: 30px 0 60px; color: var(--ink-faint); font-size: 12.5px; }
@@ -262,3 +289,76 @@ footer code { font-family: var(--font-mono); color: var(--ink-dim); }
 #tt .tt-r { display:flex; align-items:center; gap: 8px; padding: 2px 0; }
 #tt .tt-r .d { width: 8px; height: 8px; border-radius: 50%; }
 #tt .tt-r .v { margin-left: auto; font-family: var(--font-mono); font-weight: 600; }
+
+/* ===========================================================================
+   RESPONSIVE — cible mobile (la plupart des potes regardent sur téléphone)
+   =========================================================================== */
+@media (max-width: 720px) {
+  body { font-size: 14.5px; }
+  .wrap { padding: 0 16px; }
+  section { margin: 46px auto; }
+
+  /* topbar : nav scrollable horizontalement, marque compacte */
+  .topbar .wrap { gap: 10px; height: 54px; }
+  .brand-name { font-size: 15px; }
+  .topbar nav { margin-left: auto; gap: 2px; overflow-x: auto; max-width: 100%;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px); mask-image: linear-gradient(90deg, transparent 0, #000 14px); }
+  .topbar nav::-webkit-scrollbar { display: none; }
+  .topbar nav a { padding: 7px 9px; font-size: 11px; letter-spacing: .05em; white-space: nowrap; }
+
+  /* hero */
+  .hero { padding-top: 34px; }
+  .hero-eyebrow { margin-bottom: 14px; font-size: 11px; letter-spacing: .2em; }
+  .hero-sub { font-size: 15px; margin-top: 16px; }
+  .mepick { margin-top: 18px; display: flex; width: 100%; }
+  .mepick select { flex: 1 1 auto; max-width: none; min-width: 0; }
+  /* la bascule Cumulé/Par journée passe sous le titre au lieu de l'écraser */
+  .shead .seg { margin-left: 0; flex-basis: 100%; }
+  .hero-stats { gap: 10px; margin-top: 24px; }
+  .hstat { padding: 12px 14px; min-width: 0; flex: 1 1 calc(50% - 5px); }
+  .hstat .n { font-size: 27px; }
+
+  /* sections / panels */
+  .shead { gap: 12px; margin-bottom: 20px; }
+  .panel { padding: 15px; border-radius: 13px; }
+  .chart-box.tall { height: 360px; }
+  .chart-box.mid { height: 320px; }
+  .legend { gap: 6px 7px; margin-top: 14px; }
+  .lg { font-size: 11px; padding: 5px 9px; }
+
+  /* podium : 3 colonnes compactes */
+  .podium { gap: 8px; grid-template-columns: 1fr 1.12fr 1fr; margin-bottom: 20px; }
+  .pod { padding: 16px 8px 12px; border-radius: 12px; }
+  .pod .medal { font-size: 30px; }
+  .pod .who { font-size: 14px; line-height: 1.06; word-break: break-word; }
+  .pod .pts { font-size: 10px; }
+  .pod.first .crown { font-size: 15px; top: 8px; right: 8px; }
+
+  /* classement : compact + scroll horizontal de secours */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .standings th { padding: 0 7px 10px; font-size: 9.5px; letter-spacing: .07em; }
+  .standings td { padding: 10px 7px; }
+  .standings .ptsbar .track { display: none; }
+  .standings .ptsbar b { min-width: 0; }
+  .standings th:last-child, .standings td:last-child { display: none; } /* colonne Mvt — masquée sur mobile */
+  .rk { font-size: 17px; width: 20px; }
+  .pname { gap: 8px; min-width: 0; }
+  .pname .nm { font-size: 13px; }
+  .pname .nm.me::after { font-size: 8px; padding: 1px 4px; margin-left: 6px; }
+  .mono { font-size: 12.5px; }
+
+  /* duel */
+  .h2h-pick { gap: 10px; }
+  .h2h-pick select { flex: 1; min-width: 0; }
+  .h2h-grid { gap: 8px 12px; }
+  .h2h-row .a, .h2h-row .b { font-size: 18px; }
+  .h2h-row .a.hd, .h2h-row .b.hd { font-size: 15px; }
+
+  footer { margin-top: 56px; padding: 26px 0 50px; }
+}
+
+@media (max-width: 400px) {
+  .pod .who { font-size: 12.5px; }
+  .h2h-row .lbl { font-size: 9px; }
+}
