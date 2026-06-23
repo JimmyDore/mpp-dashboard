@@ -1,0 +1,6 @@
+# Secret — token d'accès mpp.football (ne jamais committer)
+.token.txt
+token.txt
+
+# OS
+.DS_Store

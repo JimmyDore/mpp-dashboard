@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Famille Lège · MPP — Coupe du Monde 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand-mark">M</div>
+    <div class="brand-name">FAMILLE&nbsp;LÈGE</div>
+    <nav>
+      <a href="#classement">Classement</a>
+      <a href="#evolution">Évolution</a>
+      <a href="#points">Points</a>
+      <a href="#precision">Précision</a>
+      <a href="#insights">Insights</a>
+      <a href="#h2h">Duel</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero wrap">
+  <div class="hero-eyebrow" id="eyebrow">Mon Petit Prono · Coupe du Monde 2026</div>
+  <h1>FAMILLE<br><span class="out">LÈGE</span></h1>
+  <p class="hero-sub" id="heroSub"></p>
+  <div class="hero-stats" id="heroStats"></div>
+</header>
+
+<!-- 01 — Classement -->
+<section id="classement" class="wrap reveal">
+  <div class="shead">
+    <div class="idx">01</div>
+    <div>
+      <h2>Le Classement</h2>
+      <p>Cumul de la compétition — points, bons pronos et scores exacts.</p>
+    </div>
+  </div>
+  <div class="podium" id="podium"></div>
+  <div class="panel">
+    <table class="standings" id="standingsTable"></table>
+  </div>
+</section>
+
+<!-- 02 — Évolution des positions -->
+<section id="evolution" class="wrap reveal">
+  <div class="shead">
+    <div class="idx">02</div>
+    <div>
+      <h2>Course au sommet</h2>
+      <p>Évolution de la position de chacun, journée après journée. Rang 1 tout en haut.</p>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="chart-box tall"><canvas id="bumpChart"></canvas></div>
+    <div class="legend" id="bumpLegend"></div>
+  </div>
+</section>
+
+<!-- 03 — Points cumulés -->
+<section id="points" class="wrap reveal">
+  <div class="shead">
+    <div class="idx">03</div>
+    <div>
+      <h2>Points cumulés</h2>
+      <p>La trajectoire de chaque joueur. Survole pour comparer.</p>
+    </div>
+    <div style="margin-left:auto" class="seg" id="ptsSeg">
+      <button data-mode="cumul" class="on">Cumulé</button>
+      <button data-mode="gw">Par journée</button>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="chart-box tall"><canvas id="pointsChart"></canvas></div>
+    <div class="legend" id="pointsLegend"></div>
+  </div>
+</section>
+
+<!-- 04 — Vainqueurs de journée -->
+<section id="journees" class="wrap reveal">
+  <div class="shead">
+    <div class="idx">04</div>
+    <div>
+      <h2>Rois de la journée</h2>
+      <p>Qui a empoché le plus de points sur chaque journée.</p>
+    </div>
+  </div>
+  <div class="grid g-3" id="gwWinners"></div>
+</section>
+
+<!-- 05 — Précision -->
+<section id="precision" class="wrap reveal">
+  <div class="shead">
+    <div class="idx">05</div>
+    <div>
+      <h2>Précision</h2>
+      <p>Taux de bons pronos (bon résultat) vs scores exacts. Le flair contre la science.</p>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="chart-box mid"><canvas id="precChart"></canvas></div>
+  </div>
+</section>
+
+<!-- 06 — Insights -->
+<section id="insights" class="wrap reveal">
+  <div class="shead">
+    <div class="idx">06</div>
+    <div>
+      <h2>Le saviez-vous</h2>
+      <p>Faits marquants extraits des 743 pronos.</p>
+    </div>
+  </div>
+  <div class="grid g-3" id="insightCards"></div>
+</section>
+
+<!-- 07 — Duel -->
+<section id="h2h" class="wrap reveal">
+  <div class="shead">
+    <div class="idx">07</div>
+    <div>
+      <h2>Duel</h2>
+      <p>Confronte deux joueurs sur tous les indicateurs.</p>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="h2h-pick">
+      <select id="h2hA"></select>
+      <span class="vs">VS</span>
+      <select id="h2hB"></select>
+    </div>
+    <div class="h2h-grid" id="h2hGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>FAMILLE LÈGE — dashboard non-officiel · données <code>api.mpp.football</code></div>
+    <div id="footMeta"></div>
+  </div>
+</footer>
+
+<div id="tt"></div>
+
+<script src="vendor/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
