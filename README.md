@@ -9,9 +9,12 @@ dashboard HTML/JS avec plein de charts.
 
 ## Voir le dashboard
 
-Double-clique sur **`index.html`** (ou ouvre-le dans un navigateur). Tout est
-auto-contenu : Chart.js est embarqué (`vendor/`) et les données aussi
-(`data.js`), donc ça marche même hors-ligne, sans serveur.
+**En ligne :** [mppstats.jimmydore.fr](https://mppstats.jimmydore.fr) (déployé
+automatiquement à chaque push sur `main` — cf. [Déploiement](#déploiement)).
+
+**En local :** double-clique sur **`index.html`** (ou ouvre-le dans un
+navigateur). Tout est auto-contenu : Chart.js est embarqué (`vendor/`) et les
+données aussi (`data.js`), donc ça marche même hors-ligne, sans serveur.
 
 ### Sections
 
@@ -70,17 +73,41 @@ Dans `scraper.py` :
 - `CHALLENGE_ID = "mpp_challenge_UDH4XJAG"` — la ligue Famille Lège
 - `CHAMPIONSHIP_ID = 8` — la Coupe du Monde 2026
 
+## Déploiement
+
+Hébergé sur le VPS Hetzner, derrière le **Caddy** partagé (HTTPS automatique via
+Let's Encrypt). Le dashboard étant 100 % statique, il tourne dans un petit
+conteneur `nginx:alpine`.
+
+**Auto-déploiement :** chaque push sur `main` déclenche
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) qui se connecte au
+serveur en SSH, fait `git pull` puis `docker compose up -d --build`, et vérifie
+que `https://mppstats.jimmydore.fr` répond. Rien d'autre à faire : on met à jour
+les données (`./refresh.sh`), on commit, on push — le site se met à jour seul.
+
+Détails d'infra :
+
+- **DNS** : un enregistrement `A  mppstats → 77.42.23.215` sur `jimmydore.fr`.
+- **Reverse proxy** : le conteneur `mppstats-web` est attaché au réseau Docker
+  `ravetycoon_default` ; le Caddy partagé y reverse-proxy via un bloc
+  `mppstats.jimmydore.fr { reverse_proxy mppstats-web:80 }`.
+- **Secrets GitHub Actions** : `DEPLOY_SSH_KEY` (clé de déploiement dédiée) et
+  `DEPLOY_KNOWN_HOSTS`.
+
 ## Structure
 
 ```
 mpp-dashboard/
-├── index.html        # le dashboard
-├── styles.css        # thème broadcast sombre + or
-├── app.js            # calculs + charts (tout côté client)
-├── data.js           # données embarquées (généré)
-├── scraper.py        # API mpp.football → CSV
-├── build_data.py     # CSV → data.js
-├── refresh.sh        # scraper + build
-├── data/             # CSV + club_names.json
-└── vendor/           # chart.js
+├── index.html         # le dashboard
+├── styles.css         # thème broadcast sombre + or
+├── app.js             # calculs + charts (tout côté client)
+├── data.js            # données embarquées (généré)
+├── scraper.py         # API mpp.football → CSV
+├── build_data.py      # CSV → data.js
+├── refresh.sh         # scraper + build
+├── data/              # CSV + club_names.json
+├── vendor/            # chart.js
+├── Dockerfile         # image nginx statique (déploiement)
+├── docker-compose.yml # conteneur web derrière le Caddy partagé
+└── .github/workflows/ # deploy.yml — CI/CD vers le VPS
 ```
