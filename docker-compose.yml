@@ -1,8 +1,12 @@
 # Stack mppstats.jimmydore.fr — un seul conteneur nginx servant le dashboard statique.
 # Pas de ports publiés : le trafic arrive via le Caddy partagé (stack ravetycoon)
 # qui reverse-proxy vers ce conteneur sur le réseau Docker `ravetycoon_default`.
+# ATTENTION : ne pas nommer ce service `web` — Compose enregistre le nom de
+# service comme alias DNS sur le réseau partagé, et `web` est déjà l'upstream
+# du Caddy pour ravetycoon.jimmydore.fr (collision = trafic RaveTycoon servi
+# aléatoirement par mppstats).
 services:
-  web:
+  mppstats:
     build: .
     image: mppstats-web
     container_name: mppstats-web
