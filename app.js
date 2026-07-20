@@ -487,6 +487,7 @@ function teamLabel(p) { return `${esc(p.home_team)} ${p.home_score}-${p.away_sco
 
 function insights() {
   const cards = [];
+  document.getElementById("insightCount").textContent = fmt(PRED.length);
 
   // a) Le plus gros coup (meilleur prono unique)
   const best = [...PRED].sort((a, b) => b.pts_total - a.pts_total)[0];
